@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head') %>
+    <title>Blogs</title>
+  </head>
+  <body>
+    <%- include('./partials/nav') %>
+
+    <div class="container mt-3">
+      <div class="container mt-3">
+        <img src="<%= blog.createdBy.profileImage %>" alt="" width="50px" />
+        <span class="m-3"><%= blog.createdBy.fullName %></span>
+      </div>
+      <h1 class="mb-3"><%= blog.title %></h1>
+      <h6><%= blog.desc %></h6>
+      <img src="<%= blog.coverImageUrl %>" alt="" width="500px" />
+      <pre><%= blog.body %></pre>
+    </div>
+
+    <div class="container mb-3">
+      <h1>Comments (<span><%=comment.length %></span>)</h1>
+
+      <% if (locals.user) { %>
+      <form action="/blog/comment/<%= blog._id %>" method="post">
+        <div class="form-group">
+          <div class="d-flex gap-5">
+            <input type="text" class="form-control" placeholder="Add a comment" id="title" name="content" />
+            <button type="submit" class="btn btn-primary">Comment</button>
+          </div>
+        </div>
+      </form>
+      <% } %>
+
+      <div class="mb-5 mt-3">
+        <% comment.forEach(cmnt => { %>
+        <div>
+          <h5>
+            <img src="<%= cmnt.createdBy.profileImage %>" alt="" width="30px" />
+            <span><%= cmnt.createdBy.fullName %></span>
+          </h5>
+          <pre><%= cmnt.content %></pre>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </body>
+  <%- include('./partials/scripts') %>
+</html>
